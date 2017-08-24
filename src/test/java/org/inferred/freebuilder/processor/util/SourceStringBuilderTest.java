@@ -22,6 +22,11 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.ImmutableList;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.inferred.freebuilder.processor.util.Scope.FileScope;
 import org.inferred.freebuilder.processor.util.feature.StaticFeatureSet;
 import org.inferred.freebuilder.processor.util.testing.ModelRule;
 import org.junit.Rule;
@@ -29,10 +34,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
@@ -46,7 +47,8 @@ public class SourceStringBuilderTest {
   @Rule public final ModelRule model = new ModelRule();
   @Rule public final ExpectedException thrown = ExpectedException.none();
   private final ImportManager shortener = new ImportManager.Builder().build();
-  private final SourceBuilder builder = new SourceStringBuilder(shortener, new StaticFeatureSet());
+  private final SourceBuilder builder =
+      new SourceStringBuilder(shortener, new StaticFeatureSet(), new FileScope());
 
   @Test
   public void testConstructor() {
